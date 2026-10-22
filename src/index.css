@@ -1,0 +1,36 @@
+/* ─── Global resets ─────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  /* Never let the root document scroll — each page manages its own height */
+  overflow: hidden;
+  height: 100%;
+}
+
+html {
+  font-size: 14px;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  font-size: 14px;
+  line-height: 1.5715;
+  background-color: #f0f2f5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Ant Design layout pages (dashboard, etc.) need their own scroll ── */
+/* Re-enable scroll only inside the #root when NOT on auth pages          */
+#root {
+  height: 100%;
+}
+
+/* ─── Custom scrollbar ─────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #bbb; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #888; }
