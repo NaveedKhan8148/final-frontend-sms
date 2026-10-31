@@ -1,7 +1,7 @@
-﻿import axios from 'axios';
+import axios from 'axios';
 
 const API_BASE = import.meta.env.VITE_API_URL 
-    ? ${import.meta.env.VITE_API_URL}/api/v1
+    ? `${import.meta.env.VITE_API_URL}/api/v1`
     : 'https://final-backend-sms-2.onrender.com/api/v1';
 
 const api = axios.create({
@@ -17,7 +17,7 @@ api.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem('accessToken') || localStorage.getItem('token');
         if (token) {
-            config.headers.Authorization = Bearer ;
+            config.headers.Authorization = `Bearer ${token}`;
         }
         return config;
     },
