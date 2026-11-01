@@ -93,7 +93,7 @@ const Classes = () => {
         setDrawerStudents([]);
         setDrawerLoading(true);
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('accessToken') || localStorage.getItem('token');
             const headers = token ? { Authorization: `Bearer ${token}` } : {};
             let list = [];
 

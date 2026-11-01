@@ -31,7 +31,7 @@ const AlumniDirectory = () => {
     const fetchAlumni = async () => {
         setLoading(true);
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('accessToken') || localStorage.getItem('token');
             const res = await axios.get('/api/v1/students/alumni', {
                 headers: { Authorization: `Bearer ${token}` }
             });

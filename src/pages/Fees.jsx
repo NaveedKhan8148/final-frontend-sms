@@ -87,7 +87,7 @@ const Fees = () => {
 
     const fetchInitialData = async () => {
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('accessToken') || localStorage.getItem('token');
             const [studentRes, classRes, sessionRes] = await Promise.all([
                 axios.get('/api/v1/students', { headers: { Authorization: `Bearer ${token}` } }),
                 axios.get('/api/v1/classes', { headers: { Authorization: `Bearer ${token}` } }),
@@ -104,7 +104,7 @@ const Fees = () => {
 
     const fetchFeeMonths = async () => {
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('accessToken') || localStorage.getItem('token');
             const res = await axios.get('/api/v1/fees/months', {
                 headers: { Authorization: `Bearer ${token}` }
             });
@@ -119,7 +119,7 @@ const Fees = () => {
     const fetchFees = async (monthOverride) => {
         setTableLoading(true);
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('accessToken') || localStorage.getItem('token');
             const targetMonth = monthOverride !== undefined ? monthOverride : selectedMonth;
             const params = {};
             if (targetMonth && targetMonth !== 'ALL') {
@@ -1069,7 +1069,7 @@ const Fees = () => {
     const handleCreateVoucher = async (values) => {
         setSubmitLoading(true);
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('accessToken') || localStorage.getItem('token');
             const payload = {
                 studentId: values.issueTarget === 'STUDENT' ? values.studentId : null,
                 classId: values.issueTarget === 'CLASS' ? values.classId : null,
@@ -1211,7 +1211,7 @@ const Fees = () => {
         }
         setSubmitLoading(true);
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('accessToken') || localStorage.getItem('token');
             const res = await axios.patch(`/api/v1/fees/${values.voucherId}/pay`, {
                 tuitionAmount: tuitionPayAmount,
                 transportAmount: transportPayAmount,
@@ -1292,7 +1292,7 @@ const Fees = () => {
 
     const handleDeleteFee = async (id) => {
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('accessToken') || localStorage.getItem('token');
             await axios.delete(`/api/v1/fees/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });

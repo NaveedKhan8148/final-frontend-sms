@@ -41,7 +41,7 @@ const Expenses = () => {
     const fetchExpenses = async () => {
         setLoading(true);
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('accessToken') || localStorage.getItem('token');
             const res = await axios.get('/api/v1/expenses', {
                 headers: { Authorization: `Bearer ${token}` }
             });
@@ -55,7 +55,7 @@ const Expenses = () => {
 
     const fetchSummary = async () => {
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('accessToken') || localStorage.getItem('token');
             const res = await axios.get('/api/v1/expenses/summary', {
                 headers: { Authorization: `Bearer ${token}` }
             });
@@ -68,7 +68,7 @@ const Expenses = () => {
     const handleCreateExpense = async (values) => {
         setSubmitLoading(true);
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('accessToken') || localStorage.getItem('token');
             const payload = {
                 title: values.title,
                 category: values.category || 'OTHER',
@@ -96,7 +96,7 @@ const Expenses = () => {
 
     const handleDeleteExpense = async (id) => {
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('accessToken') || localStorage.getItem('token');
             await axios.delete(`/api/v1/expenses/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });

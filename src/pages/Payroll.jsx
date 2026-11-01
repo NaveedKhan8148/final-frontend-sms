@@ -38,7 +38,7 @@ const Payroll = () => {
 
     const fetchTeachers = async () => {
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('accessToken') || localStorage.getItem('token');
             const res = await axios.get('/api/v1/teachers', {
                 headers: { Authorization: `Bearer ${token}` }
             });
@@ -51,7 +51,7 @@ const Payroll = () => {
     const fetchPayrolls = async () => {
         setLoading(true);
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('accessToken') || localStorage.getItem('token');
             const res = await axios.get('/api/v1/payroll', {
                 headers: { Authorization: `Bearer ${token}` }
             });
@@ -66,7 +66,7 @@ const Payroll = () => {
     const handleCreatePayroll = async (values) => {
         setSubmitLoading(true);
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('accessToken') || localStorage.getItem('token');
             const payload = {
                 teacherId: values.teacherId,
                 month: values.month,
@@ -92,7 +92,7 @@ const Payroll = () => {
 
     const handleDisburse = async (id) => {
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('accessToken') || localStorage.getItem('token');
             await axios.patch(`/api/v1/payroll/${id}/disburse`, { paymentMethod: 'BANK_TRANSFER' }, {
                 headers: { Authorization: `Bearer ${token}` }
             });

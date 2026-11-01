@@ -11,11 +11,13 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
         const storedProfile = localStorage.getItem('profile');
-        const token = localStorage.getItem('accessToken');
+        const token = localStorage.getItem('accessToken') || localStorage.getItem('token');
 
         if (storedUser && token) {
             const parsedUser = JSON.parse(storedUser);
             setUser(parsedUser);
+            localStorage.setItem('accessToken', token);
+            localStorage.setItem('token', token);
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
             if (storedProfile) {
@@ -34,6 +36,10 @@ export const AuthProvider = ({ children }) => {
         const interceptor = axios.interceptors.response.use(
             (response) => response,
             (error) => {
+                const url = error.config?.url || '';
+                if (url.includes('/users/login') || url.includes('/users/forgot-password') || url.includes('/organizations/register')) {
+                    return Promise.reject(error);
+                }
                 if (error.response?.status === 401) {
                     // Token expired or invalid, force logout
                     logout(true);
@@ -77,6 +83,7 @@ export const AuthProvider = ({ children }) => {
             setUser(user);
             localStorage.setItem('user', JSON.stringify(user));
             localStorage.setItem('accessToken', accessToken);
+            localStorage.setItem('token', accessToken);
             localStorage.setItem('refreshToken', refreshToken);
             localStorage.setItem('organizationId', user.organizationId);
             axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
@@ -105,6 +112,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('user');
         localStorage.removeItem('profile');
         localStorage.removeItem('accessToken');
+        localStorage.removeItem('token');
         localStorage.removeItem('refreshToken');
         localStorage.removeItem('organizationId');
         localStorage.removeItem('organizationName');

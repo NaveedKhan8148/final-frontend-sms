@@ -44,7 +44,7 @@ const AcademicSessions = () => {
     const fetchSessions = async () => {
         setLoading(true);
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('accessToken') || localStorage.getItem('token');
             const res = await axios.get('/api/v1/academic-sessions', {
                 headers: { Authorization: `Bearer ${token}` }
             });
@@ -60,7 +60,7 @@ const AcademicSessions = () => {
 
     const handleSetCurrent = async (id, name) => {
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('accessToken') || localStorage.getItem('token');
             await axios.patch(`/api/v1/academic-sessions/${id}/set-current`, {}, {
                 headers: { Authorization: `Bearer ${token}` }
             });
@@ -73,7 +73,7 @@ const AcademicSessions = () => {
 
     const handleDelete = async (id) => {
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('accessToken') || localStorage.getItem('token');
             await axios.delete(`/api/v1/academic-sessions/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
@@ -103,7 +103,7 @@ const AcademicSessions = () => {
     const handleFormSubmit = async (values) => {
         setSubmitLoading(true);
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('accessToken') || localStorage.getItem('token');
             const payload = {
                 name: values.name,
                 startDate: values.dateRange[0].format('YYYY-MM-DD'),

@@ -35,7 +35,7 @@ const StudentPromotion = () => {
 
     const fetchInitialData = async () => {
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('accessToken') || localStorage.getItem('token');
             const [classRes, sessionRes] = await Promise.all([
                 axios.get('/api/v1/classes', { headers: { Authorization: `Bearer ${token}` } }),
                 axios.get('/api/v1/academic-sessions', { headers: { Authorization: `Bearer ${token}` } })
@@ -63,7 +63,7 @@ const StudentPromotion = () => {
 
         setLoadingStudents(true);
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('accessToken') || localStorage.getItem('token');
             const res = await axios.get(`/api/v1/students/class/${classId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
@@ -132,7 +132,7 @@ const StudentPromotion = () => {
 
         setSubmitting(true);
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('accessToken') || localStorage.getItem('token');
             const payload = {
                 sourceClassId,
                 targetClassId: targetClassId || null,
